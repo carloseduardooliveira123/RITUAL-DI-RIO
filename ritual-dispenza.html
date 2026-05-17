@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritual Diário — Joe Dispenza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm: #E8DFD0;
+    --gold: #B8965A;
+    --gold-light: #D4B47A;
+    --dark: #1C1712;
+    --mid: #4A3F32;
+    --muted: #8A7A68;
+    --accent: #7B5E3A;
+    --green: #4A5E40;
+    --green-light: #6A8060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .date-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px auto;
+    opacity: 0.6;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--warm);
+    border-radius: 2px;
+    height: 3px;
+    margin-bottom: 48px;
+    overflow: hidden;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 32px;
+  }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    margin-top: 48px;
+  }
+
+  /* RITUAL CARD */
+  .ritual-card {
+    background: #fff;
+    border: 1px solid rgba(184, 150, 90, 0.2);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    transition: all 0.4s ease;
+    animation: fadeUp 0.6s ease both;
+    cursor: pointer;
+  }
+
+  .ritual-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    border-radius: 4px 0 0 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ritual-card.completed::before {
+    opacity: 1;
+  }
+
+  .ritual-card.completed {
+    background: linear-gradient(135deg, #fff 0%, #FDFAF5 100%);
+    border-color: rgba(184, 150, 90, 0.35);
+  }
+
+  .ritual-card:hover {
+    border-color: rgba(184, 150, 90, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(74, 63, 50, 0.08);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .step-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    min-width: 28px;
+    padding-top: 4px;
+  }
+
+  .card-content { flex: 1; }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+
+  .card-principle {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .card-action {
+    font-size: 0.82rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+    border-left: 2px solid var(--warm);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+
+  .check-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid rgba(138, 122, 104, 0.3);
+    border-radius: 2px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .check-btn:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .ritual-card.completed .check-btn {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+
+  .check-icon {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    transition: all 0.3s ease;
+  }
+
+  /* JOURNAL SECTION */
+  .journal-wrap {
+    background: #fff;
+    border: 1px solid rgba(184, 150, 90, 0.2);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .journal-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .journal-question {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    background: var(--cream);
+    border: 1px solid rgba(138, 122, 104, 0.2);
+    border-radius: 2px;
+    padding: 14px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--dark);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s ease;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  textarea::placeholder { color: var(--muted); font-style: italic; }
+  textarea:focus { border-color: var(--gold); }
+
+  /* EMOTION TRACKER */
+  .emotion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .emotion-btn {
+    padding: 10px 14px;
+    border: 1px solid rgba(138, 122, 104, 0.25);
+    border-radius: 2px;
+    background: none;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--mid);
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+
+  .emotion-btn:hover { border-color: var(--gold); color: var(--dark); }
+  .emotion-btn.selected {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+
+  .emotion-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* SAVE BUTTON */
+  .save-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+  }
+
+  .save-btn:hover { background: var(--accent); }
+
+  /* IDENTITY BLOCK */
+  .identity-wrap {
+    background: var(--dark);
+    border-radius: 4px;
+    padding: 40px 36px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.6s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .identity-wrap::after {
+    content: '"';
+    position: absolute;
+    right: 24px;
+    top: -10px;
+    font-size: 180px;
+    color: rgba(184, 150, 90, 0.08);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .identity-wrap .section-title { color: var(--gold-light); margin-top: 0; }
+
+  .identity-quote {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .identity-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(184, 150, 90, 0.3);
+    border-radius: 2px;
+    padding: 14px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-bottom: 12px;
+  }
+
+  .identity-input::placeholder { color: rgba(245, 240, 232, 0.3); font-style: italic; }
+  .identity-input:focus { border-color: var(--gold); }
+
+  /* FOOTER */
+  .day-summary {
+    text-align: center;
+    padding: 40px 24px;
+    animation: fadeUp 0.6s 0.8s ease both;
+  }
+
+  .summary-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 64px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  .summary-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .reset-btn {
+    margin-top: 32px;
+    padding: 10px 24px;
+    background: none;
+    border: 1px solid rgba(138, 122, 104, 0.3);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .reset-btn:hover { border-color: var(--muted); color: var(--dark); }
+
+  /* CELEBRATION */
+  .celebration {
+    display: none;
+    text-align: center;
+    padding: 32px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    animation: pulse 2s ease infinite;
+  }
+
+  .celebration.show { display: block; }
+  .celebration h2 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; font-weight: 300; }
+  .celebration p { color: rgba(255,255,255,0.85); font-style: italic; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(184, 150, 90, 0.3); }
+    50% { box-shadow: 0 0 0 12px rgba(184, 150, 90, 0); }
+  }
+
+  /* Stagger animations */
+  .ritual-card:nth-child(1) { animation-delay: 0.1s; }
+  .ritual-card:nth-child(2) { animation-delay: 0.15s; }
+  .ritual-card:nth-child(3) { animation-delay: 0.2s; }
+  .ritual-card:nth-child(4) { animation-delay: 0.25s; }
+  .ritual-card:nth-child(5) { animation-delay: 0.3s; }
+  .ritual-card:nth-child(6) { animation-delay: 0.35s; }
+
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; }
+    .ritual-card, .journal-wrap, .identity-wrap { padding: 24px 20px; }
+    .emotion-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="date-label" id="dateLabel"></div>
+    <h1>Ritual <em>Diário</em></h1>
+    <div class="divider"></div>
+    <p class="subtitle">Baseado nos ensinamentos de Joe Dispenza</p>
+  </header>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 de 6 práticas concluídas</div>
+
+  <!-- CELEBRATION -->
+  <div class="celebration" id="celebration">
+    <h2>✦ Dia Completo</h2>
+    <p>Você pensou, sentiu e agiu de acordo. A manifestação está em movimento.</p>
+  </div>
+
+  <!-- MANHÃ -->
+  <div class="section-title">✦ Manhã — Ensaio Emocional</div>
+
+  <div class="ritual-card" id="card-0" onclick="toggleCard(0)">
+    <div class="card-header">
+      <span class="step-number">01</span>
+      <div class="card-content">
+        <div class="card-title">Comece com a emoção final</div>
+        <div class="card-principle">"Não visualize o que você quer. Sinta como é já ter isso."</div>
+        <div class="card-action">Feche os olhos. Escolha uma emoção: Amor · Gratidão · Alegria · Liberdade.<br>Permaneça nela por 2 minutos antes de abrir os olhos.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(0)">
+          <span class="check-icon" id="icon-0">○</span>
+          <span id="btn-text-0">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ritual-card" id="card-1" onclick="toggleCard(1)">
+    <div class="card-header">
+      <span class="step-number">02</span>
+      <div class="card-content">
+        <div class="card-title">Ensaio emocional (10–15 min)</div>
+        <div class="card-principle">"Visualize, sinta, acredite até que seu corpo não consiga distinguir imaginação de realidade."</div>
+        <div class="card-action">Sente-se em silêncio. Viva o resultado final que você deseja. Sinta os detalhes: onde você está, como seu corpo se sente, o que você ouve.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(1)">
+          <span class="check-icon" id="icon-1">○</span>
+          <span id="btn-text-1">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AO LONGO DO DIA -->
+  <div class="section-title">✦ Durante o Dia — Frequência e Identidade</div>
+
+  <div class="ritual-card" id="card-2" onclick="toggleCard(2)">
+    <div class="card-header">
+      <span class="step-number">03</span>
+      <div class="card-content">
+        <div class="card-title">Monitore sua energia (3x ao dia)</div>
+        <div class="card-principle">"Estou na carência ou na gratidão?"</div>
+        <div class="card-action">Manhã · Meio-dia · Tarde:<br>Pause. Observe sua frequência. Se estiver em carência, medo ou reatividade — escolha deliberadamente retornar à gratidão.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(2)">
+          <span class="check-icon" id="icon-2">○</span>
+          <span id="btn-text-2">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ritual-card" id="card-3" onclick="toggleCard(3)">
+    <div class="card-header">
+      <span class="step-number">04</span>
+      <div class="card-content">
+        <div class="card-title">Rompa com a velha identidade</div>
+        <div class="card-principle">"Se você continua pensando, reagindo e falando como o seu eu do passado... continuará recriando os mesmos resultados."</div>
+        <div class="card-action">Identifique UM padrão automático de hoje (reação, pensamento, hábito antigo).<br>Pause antes de repetir. Escolha a resposta da versão futura de você.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(3)">
+          <span class="check-icon" id="icon-3">○</span>
+          <span id="btn-text-3">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ritual-card" id="card-4" onclick="toggleCard(4)">
+    <div class="card-header">
+      <span class="step-number">05</span>
+      <div class="card-content">
+        <div class="card-title">Alinhe pensamento, emoção e ação</div>
+        <div class="card-principle">"A verdadeira manifestação começa quando o que você pensa, o que sente e o que faz deixam de estar em conflito."</div>
+        <div class="card-action">Escolha UMA ação hoje que seja completamente coerente com o que você deseja manifestar. Sem contradição entre o que você afirma e o que você faz.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(4)">
+          <span class="check-icon" id="icon-4">○</span>
+          <span id="btn-text-4">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOITE -->
+  <div class="section-title">✦ Noite — Reflexão e Persistência</div>
+
+  <div class="ritual-card" id="card-5" onclick="toggleCard(5)">
+    <div class="card-header">
+      <span class="step-number">06</span>
+      <div class="card-content">
+        <div class="card-title">Persistência: parecer normal</div>
+        <div class="card-principle">"No começo vai parecer falso. Depois vai parecer possível. Então vai parecer natural."</div>
+        <div class="card-action">Revise o dia. Onde pareceu falso manter a nova identidade? Isso é evidência de progresso — não de fracasso. Amanhã ficará mais fácil.</div>
+        <button class="check-btn" onclick="event.stopPropagation(); toggleCard(5)">
+          <span class="check-icon" id="icon-5">○</span>
+          <span id="btn-text-5">Marcar como feito</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIÁRIO -->
+  <div class="section-title">✦ Diário — Autoconhecimento Diário</div>
+
+  <div class="journal-wrap">
+    <span class="journal-label">reflexão</span>
+    <div class="journal-question">Qual emoção dominou meu dia hoje?</div>
+    <span class="emotion-label">Selecione a dominante:</span>
+    <div class="emotion-grid" id="emotionGrid">
+      <button class="emotion-btn" onclick="selectEmotion(this)">✦ Gratidão</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">✦ Amor</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">✦ Alegria</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">✦ Liberdade</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">◦ Ansiedade</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">◦ Carência</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">◦ Medo</button>
+      <button class="emotion-btn" onclick="selectEmotion(this)">◦ Reatividade</button>
+    </div>
+
+    <span class="journal-label" style="margin-top: 24px;">conquista do dia</span>
+    <div class="journal-question">Que momento hoje foi coerente com quem estou me tornando?</div>
+    <textarea id="journal1" placeholder="Escreva livremente..."></textarea>
+
+    <span class="journal-label">desafio</span>
+    <div class="journal-question">Onde o 'eu do passado' apareceu? Como respondi?</div>
+    <textarea id="journal2" placeholder="Seja honesto — isso é o trabalho..."></textarea>
+
+    <span class="journal-label">intenção de amanhã</span>
+    <div class="journal-question">Que versão de mim quero ser amanhã?</div>
+    <textarea id="journal3" placeholder="Escreva no presente, como se já fosse..."></textarea>
+
+    <button class="save-btn" onclick="saveJournal()">✦ Salvar Reflexão do Dia</button>
+  </div>
+
+  <!-- IDENTIDADE -->
+  <div class="identity-wrap">
+    <div class="section-title">✦ Declaração de Identidade</div>
+    <div class="identity-quote">
+      "Seu trabalho não é 'obter' a manifestação. Seu trabalho é se tornar a versão de si mesmo para a qual ela é inevitável."
+    </div>
+    <input type="text" class="identity-input" id="identityInput"
+      placeholder="Eu sou alguém que..."
+      value="">
+    <button class="save-btn" style="background: rgba(184,150,90,0.2); color: var(--gold-light); border: 1px solid rgba(184,150,90,0.3);" onclick="saveIdentity()">
+      Salvar Minha Declaração
+    </button>
+  </div>
+
+  <!-- RESUMO DO DIA -->
+  <div class="day-summary">
+    <div class="summary-number" id="completedCount">0</div>
+    <div class="summary-label">práticas concluídas hoje</div>
+    <br>
+    <div style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 8px;" id="streakMsg"></div>
+    <br>
+    <button class="reset-btn" onclick="resetDay()">↺ Reiniciar para amanhã</button>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 6;
+  let completed = new Array(TOTAL).fill(false);
+  let selectedEmotion = '';
+
+  // DATE
+  const days = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const now = new Date();
+  document.getElementById('dateLabel').textContent =
+    `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+
+  // LOAD STATE
+  function loadState() {
+    const saved = localStorage.getItem('dispenza_day');
+    const savedDate = localStorage.getItem('dispenza_date');
+    const today = now.toDateString();
+
+    if (savedDate === today && saved) {
+      completed = JSON.parse(saved);
+      completed.forEach((done, i) => { if (done) applyDone(i); });
+    }
+
+    const journal1 = localStorage.getItem('dispenza_j1_' + today);
+    const journal2 = localStorage.getItem('dispenza_j2_' + today);
+    const journal3 = localStorage.getItem('dispenza_j3_' + today);
+    const emotion = localStorage.getItem('dispenza_emotion_' + today);
+    const identity = localStorage.getItem('dispenza_identity');
+
+    if (journal1) document.getElementById('journal1').value = journal1;
+    if (journal2) document.getElementById('journal2').value = journal2;
+    if (journal3) document.getElementById('journal3').value = journal3;
+    if (emotion) {
+      selectedEmotion = emotion;
+      document.querySelectorAll('.emotion-btn').forEach(btn => {
+        if (btn.textContent.trim() === emotion) btn.classList.add('selected');
+      });
+    }
+    if (identity) document.getElementById('identityInput').value = identity;
+
+    updateProgress();
+    checkStreak();
+  }
+
+  function applyDone(i) {
+    const card = document.getElementById(`card-${i}`);
+    const icon = document.getElementById(`icon-${i}`);
+    const txt = document.getElementById(`btn-text-${i}`);
+    card.classList.add('completed');
+    icon.textContent = '✓';
+    txt.textContent = 'Concluído';
+  }
+
+  function toggleCard(i) {
+    completed[i] = !completed[i];
+    const card = document.getElementById(`card-${i}`);
+    const icon = document.getElementById(`icon-${i}`);
+    const txt = document.getElementById(`btn-text-${i}`);
+
+    if (completed[i]) {
+      card.classList.add('completed');
+      icon.textContent = '✓';
+      txt.textContent = 'Concluído';
+    } else {
+      card.classList.remove('completed');
+      icon.textContent = '○';
+      txt.textContent = 'Marcar como feito';
+    }
+
+    localStorage.setItem('dispenza_day', JSON.stringify(completed));
+    localStorage.setItem('dispenza_date', now.toDateString());
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const count = completed.filter(Boolean).length;
+    const pct = Math.round((count / TOTAL) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `${count} de ${TOTAL} práticas concluídas`;
+    document.getElementById('completedCount').textContent = count;
+
+    if (count === TOTAL) {
+      document.getElementById('celebration').classList.add('show');
+    } else {
+      document.getElementById('celebration').classList.remove('show');
+    }
+  }
+
+  function selectEmotion(btn) {
+    document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedEmotion = btn.textContent.trim();
+    localStorage.setItem('dispenza_emotion_' + now.toDateString(), selectedEmotion);
+  }
+
+  function saveJournal() {
+    const today = now.toDateString();
+    localStorage.setItem('dispenza_j1_' + today, document.getElementById('journal1').value);
+    localStorage.setItem('dispenza_j2_' + today, document.getElementById('journal2').value);
+    localStorage.setItem('dispenza_j3_' + today, document.getElementById('journal3').value);
+
+    const btn = document.querySelector('.save-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Reflexão Salva';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 2000);
+  }
+
+  function saveIdentity() {
+    const val = document.getElementById('identityInput').value;
+    localStorage.setItem('dispenza_identity', val);
+    alert('Declaração salva: "' + val + '"');
+  }
+
+  function checkStreak() {
+    const streak = parseInt(localStorage.getItem('dispenza_streak') || '0');
+    if (streak > 0) {
+      document.getElementById('streakMsg').textContent = `🔥 ${streak} dia${streak > 1 ? 's' : ''} consecutivo${streak > 1 ? 's' : ''} de prática`;
+    }
+  }
+
+  function resetDay() {
+    if (!confirm('Reiniciar para um novo dia?')) return;
+
+    // Update streak
+    const today = now.toDateString();
+    const lastDay = localStorage.getItem('dispenza_date');
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    let streak = parseInt(localStorage.getItem('dispenza_streak') || '0');
+
+    if (completed.filter(Boolean).length === TOTAL) {
+      if (lastDay === yesterday.toDateString()) {
+        streak++;
+      } else {
+        streak = 1;
+      }
+      localStorage.setItem('dispenza_streak', streak);
+    }
+
+    completed = new Array(TOTAL).fill(false);
+    localStorage.removeItem('dispenza_day');
+
+    for (let i = 0; i < TOTAL; i++) {
+      const card = document.getElementById(`card-${i}`);
+      const icon = document.getElementById(`icon-${i}`);
+      const txt = document.getElementById(`btn-text-${i}`);
+      card.classList.remove('completed');
+      icon.textContent = '○';
+      txt.textContent = 'Marcar como feito';
+    }
+
+    document.getElementById('journal1').value = '';
+    document.getElementById('journal2').value = '';
+    document.getElementById('journal3').value = '';
+    document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+    selectedEmotion = '';
+    document.getElementById('celebration').classList.remove('show');
+    updateProgress();
+  }
+
+  loadState();
+</script>
+</body>
+</html>
